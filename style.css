@@ -367,67 +367,92 @@ footer {
     80% { opacity: 1; }
     100% { opacity: 0; display: none; }
   }
-  #fake-order-popup {
-    position: fixed;
-    top: 10px;
-    right: 20px;
-    background-color: #003366;
-    color: #fff;
-    padding: 0.8rem 1rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    z-index: 998;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    font-size: 0.95rem;
-  }
-  /* Exit Popup */
-#exit-popup {
+  /* Live order popup (bottom left corner) */
+#live-order-popup {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: none;
-  justify-content: center;
-  align-items: center;
+  left: 20px;
+  bottom: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-size: 14px;
+  max-width: 260px;
+  display: none;             /* hidden by default */
   z-index: 9999;
 }
+
+#live-order-popup.show {
+  display: block;
+  animation: livePopupFade 0.4s ease-out;
+}
+
+@keyframes livePopupFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#live-order-popup .name {
+  font-weight: bold;
+}
+
+#live-order-popup .state {
+  font-weight: bold;
+  color: #28a745;
+}
+
+#live-order-popup .time {
+  font-size: 12px;
+  color: #777;
+}
+
+  /* Exit Popup */
+#exit-popup {
+  display: none;              /* hidden by default */
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
 #exit-popup .popup-content {
   background: #fff;
+  padding: 20px;
+  max-width: 480px;
   width: 90%;
-  max-width: 400px;
-  padding: 25px;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  animation: fadeInUp 0.3s ease;
+  border-radius: 8px;
 }
-#exit-popup input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+
+/* when JS adds the 'visible' class, we show it */
+#exit-popup.visible {
+  display: flex;
 }
-#exit-popup button {
-  background: #f47354;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 25px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-}
-#exit-popup button:hover {
-  background: #e25539;
-}
-#exit-popup .skip {
-  margin-top: 10px;
-  color: #666;
-  font-size: 0.9em;
-  cursor: pointer;
-}
+
 @keyframes fadeInUp {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #333;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 10000;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateY(0);
 }

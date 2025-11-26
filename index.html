@@ -47,7 +47,9 @@
      <img src="img/fb.jpg"/>
     <a href="#order-form" class="cta-button">Order Now & Save 40%</a>
   </header>
-  <div id="fake-order-popup"></div>
+  <!-- Live fake order notification -->
+  <div id="live-order-popup"></div>
+
 
   <!-- Intrigue Bullets -->
   <section class="bullets">
@@ -69,7 +71,7 @@
 
   <!-- The Solution -->
   <section class="solution">
-    <h2>Introducing Fibroid Solution</h2>
+    <h2>Introducing Fibroid Shrink Solution Capsules</h2>
     <img src="img/fibb.jpg"/>
     <p>This all-natural blend has helped thousands of Nigerian women shrink fibroids without surgery. Backed by traditional eastern herbology and modern refinement, it targets the root causes and relieves symptoms fast.</p>
     <b> <ol>
@@ -85,7 +87,7 @@
   </section>
 <section class="fibroid-section" style="font-family: Arial, sans-serif; background: #fefefe; padding: 30px 20px; max-width: 1200px; margin: auto;">
   <h2 style="text-align: center; font-size: 28px; margin-bottom: 40px; color: #d63384;">
-    How Fibroid Solution Works to Permanently Shrink & Eliminate Fibroids
+    How Fibroid Shrink Solution Capsule Works to Permanently Shrink & Eliminate Fibroids
   </h2>
 
   <!-- Before & After Image -->
@@ -105,7 +107,7 @@
     <div>
       
       <h4>Step 1: Nutrients Enter Bloodstream</h4>
-      <p>The herbs in Fibroid Solution enter your blood and head straight to your womb.</p>
+      <p>The herbs in Fibroid Shrink Solution Capsules enter your blood and head straight to your womb.</p>
     </div>
     <div>
       <h4>Step 2: Target Fibroids</h4>
@@ -168,7 +170,7 @@
     <div class="testimonial">
       <p><b>“i was experiencing extremely heavy bleeding during my menstrual cycle, I would have to bring an extra set of clothing with me. 
         I had to center my life around the times that my cycle was there and was not and that wasn't fun. 
-        The fibroid solution relieves me of this pain.”</b></p>
+        The fibroid shrink solution capsule relieves me of this pain.”</b></p>
       <strong>Mrs Comfort, Benin City</strong>
     </div>
     <div class="testimonial">
@@ -187,7 +189,7 @@
 
   <!-- Product Benefits -->
   <section class="benefits">
-    <h2>Why Fibroid Solution Works</h2>
+    <h2>Why Fibroid Shrink Solution Capsule Works</h2>
     <ul>
       <li>Shrinks fibroids naturally without chemicals</li>
       <li>Improves menstrual health and balances hormones</li>
@@ -328,7 +330,7 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
   });
 
   if (response.ok) {
-    window.location.href = "https://testrunthisshit.netlify.app/thankyou.html";
+    window.location.href = "thankyou.html";
   } else {
     alert("Something went wrong. Please try again.");
   }
@@ -501,8 +503,146 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
     <p id="skip-popup" class="skip">No thanks, continue browsing</p>
   </div>
 </div>
-<script src="script.js" defer></script>
+<script>
+  // Run this after the page loads
+  window.addEventListener("load", function () {
+    const exitPopup = document.getElementById("exit-popup");
+    const skipPopup = document.getElementById("skip-popup");
+
+    if (!exitPopup) return;
+
+    // Function to show popup
+    function showExitPopup() {
+      exitPopup.classList.add("visible");
+    }
+
+    // Function to hide popup
+    function hideExitPopup() {
+      exitPopup.classList.remove("visible");
+    }
+
+    // Show popup after 20 seconds on the page
+    setTimeout(showExitPopup, 40000);
+
+    // If user clicks "No thanks", hide popup
+    if (skipPopup) {
+      skipPopup.addEventListener("click", hideExitPopup);
+    }
+
+    // (Optional) On desktop, show when mouse leaves the top of the screen (exit intent)
+    let mouseTriggered = false;
+    window.addEventListener("mouseout", function (e) {
+      if (e.clientY <= 0 && !mouseTriggered) {
+        mouseTriggered = true;
+        showExitPopup();
+      }
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener("load", function () {
+    const sendBtn = document.getElementById("send-comment");
+    const commentInput = document.getElementById("comment-input");
+    const toast = document.getElementById("comment-toast");
+    const commentsSection = document.querySelector(".comments-section");
+
+    if (!sendBtn || !commentInput || !toast || !commentsSection) return;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => {
+        toast.classList.remove("visible");
+      }, 3000);
+    }
+
+    sendBtn.addEventListener("click", function () {
+      const text = commentInput.value.trim();
+      if (!text) {
+        showToast("Write something first!");
+        return;
+      }
+
+      // Add new comment to the list (only in the browser, not saved)
+      const newComment = document.createElement("div");
+      newComment.className = "comment";
+      newComment.innerHTML = `
+        <img src="img/default-avatar.png" alt="Profile picture" class="avatar">
+        <div class="comment-content">
+          <p><strong>You</strong> ${text}</p>
+          <div class="comment-actions">
+            <span>Like</span> · <span>Reply</span> · <span>Just now</span>
+          </div>
+        </div>
+      `;
+      const writeBox = document.querySelector(".write-comment");
+      commentsSection.insertBefore(newComment, writeBox);
+
+      commentInput.value = "";
+      showToast("Comment sent!");
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener("load", function () {
+    const box = document.getElementById("live-order-popup");
+    if (!box) return;
+
+    // Fake data lists
+    const names = [
+      "Mrs. Grace", "Chioma", "Aisha", "Ngozi", "Rukayat",
+      "Amaka", "Mrs. Bisi", "Hauwa", "Juliet", "Oma", "Sarah"
+    ];
+
+    const states = [
+      "Lagos", "Abuja (FCT)", "Kano", "Rivers", "Oyo", "Edo",
+      "Delta", "Anambra", "Kaduna", "Ogun", "Enugu"
+    ];
+
+    const quantities = [
+      "1 bottle", "2 bottles", "3 bottles"
+    ];
+
+    function getRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function showFakeOrder() {
+      const name = getRandom(names);
+      const state = getRandom(states);
+      const qty = getRandom(quantities);
+
+      // Set the inner HTML of the popup
+      box.innerHTML = `
+        <div>
+          <span class="name">${name}</span> from 
+          <span class="state">${state}</span> just ordered 
+          <strong>${qty}</strong> of Fibroid Shrink Solution Capsule.
+        </div>
+        <div class="time">a few seconds ago</div>
+      `;
+
+      // Show box
+      box.classList.add("show");
+
+      // Hide after 6 seconds
+      setTimeout(function () {
+        box.classList.remove("show");
+      }, 6000);
+    }
+
+    // First popup after 10 seconds
+    setTimeout(showFakeOrder, 10000);
+
+    // Then every 30 seconds
+    setInterval(showFakeOrder, 30000);
+  });
+</script>
+
+
+
 
 </body>
 </html>
-
