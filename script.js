@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 1) Timed popup (e.g. 20 seconds)
-  setTimeout(showExitPopup, 20000);
+  setTimeout(showExitPopup, 200000);
 
   // 2) Exit intent (desktop only)
   document.addEventListener('mouseleave', function (e) {
@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // First fake order after 10s
     setTimeout(showFakeOrder, 10000);
 
-    // Repeat every 25s
-    setInterval(showFakeOrder, 25000);
+    // Repeat every 30s
+    setInterval(showFakeOrder, 30000);
   }
 
   /* =========================
